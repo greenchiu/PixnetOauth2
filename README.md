@@ -16,9 +16,12 @@ import `PixnetOauth2` and `PixnetOauth2ViewController`
 typeof(self) __weak w_self = self;
 PixnetOauth2CompletedHandler handler = ^(PixnetOauth2* oauth, BOOL isCancel, NSError* error) {
   if(oauth) {
-    
+    // oauth中包含accessToken&refreshToken.
   } else if(isCancel || error) {
-    [w_self.loginButton setEnabled:YES];
+    /**
+     * isCancel = YES, 表示自行退出Oauth流程
+     * error, 錯誤訊息
+     */
   }
 };
     
