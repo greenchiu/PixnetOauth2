@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PixnetOauth2.h"
+#import "PixnetSDK.h"
+
 
 typedef void (^PixnetOauth2CompletedHandler)(PixnetOauth2* oauth, BOOL isCancel, NSError *error);
 
@@ -45,4 +46,22 @@ typedef void (^PixnetOauth2CompletedHandler)(PixnetOauth2* oauth, BOOL isCancel,
                 redirectUrl:(NSString*)redirectUrl
            completedHandler:(PixnetOauth2CompletedHandler)OauthHandler;
 
+
+
+#if PIXNET_SDK_VERSION > PIXNET_SDK_001000
+/**
+ * 建立OauthController實體
+ *
+ * @param consumerId consumer_key
+ * @param consumerSecret consumer_secret
+ * @param redirectUrl redirect_uri
+ * @param scopes not support ,set nil (permissions)
+ * @param OauthHandler Oauth結束後的callback handler
+ */
+- (id)initOauthWithClientId:(NSString*)consumerId
+               clientSecret:(NSString*)consumerSecret
+                redirectUrl:(NSString*)redirectUrl
+                     scopes:(NSArray*)scopes
+           completedHandler:(PixnetOauth2CompletedHandler)OauthHandler;
+#endif
 @end

@@ -69,6 +69,24 @@
     
     [self.indicator startAnimating];
     
+    __block PixnetOauth2* oauth = [[PixnetOauth2 alloc] initWithConsumerId:self.consumerId
+                                                            comsumerSercet:self.consumerSecret];
+    
+    typeof(self) __weak w_self = self;
+    [oauth grantAccessTokenWithType:PixnetOauth2GrantTypeAuthorizationCode
+                         withObject:@{kAuthroizationCode:code, kRedirectUri:self.redirectUrl}
+                            handler:^(BOOL success, NSError* error){
+                                NSLog(@"%@", oauth);
+                                if(success) {
+                                    w_self.completedHandler([oauth copy], YES, error);
+                                } else {
+                                    w_self.completedHandler(nil, NO, error);
+                                }
+                                [w_self dismissViewControllerAnimated:YES completion:^{}];
+                            }];
+    
+    return;
+    
     static NSString* grantURLFormat = @"https://emma.pixnet.cc/oauth2/grant?grant_type=authorization_code&code=%@&redirect_uri=%@&client_id=%@&client_secret=%@";
     
     NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:grantURLFormat,code,self.redirectUrl, self.consumerId, self.consumerSecret]];
@@ -76,7 +94,7 @@
     NSURLRequest* request = [NSURLRequest requestWithURL:url];
     
     
-    typeof(self) __weak w_self = self;
+//    typeof(self) __weak w_self = self;
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse* response, NSData* data, NSError* error){

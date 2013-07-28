@@ -73,6 +73,8 @@
 		18F7E3D8179FBD880028750F /* FBPublishViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FBPublishViewController.xib; sourceTree = "<group>"; };
 		2F38F3D609A843AC8CC80639 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		888BC5A269C84880B4FF830B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C216438717A55DD100EDC018 /* PixnetSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PixnetSDK.h; path = pixnet/PixnetSDK.h; sourceTree = "<group>"; };
+		C216438817A55DD100EDC018 /* PixnetVersions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PixnetVersions.h; path = pixnet/PixnetVersions.h; sourceTree = "<group>"; };
 		C232601017A16B7000D6DC31 /* reference.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = reference.xib; sourceTree = "<group>"; };
 		C232601217A16BAC00D6DC31 /* ArticleCommentRowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArticleCommentRowCell.h; sourceTree = "<group>"; };
 		C232601317A16BAC00D6DC31 /* ArticleCommentRowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArticleCommentRowCell.m; sourceTree = "<group>"; };
@@ -171,6 +173,8 @@
 		18F7E3C4179F65540028750F /* pixnetclasses */ = {
 			isa = PBXGroup;
 			children = (
+				C216438717A55DD100EDC018 /* PixnetSDK.h */,
+				C216438817A55DD100EDC018 /* PixnetVersions.h */,
 				18F7E3BF179F65480028750F /* PixnetOauth2ViewController.h */,
 				18F7E3C0179F65480028750F /* PixnetOauth2ViewController.m */,
 				18F7E3C1179F65480028750F /* PixnetOauth2ViewController.xib */,

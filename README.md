@@ -37,6 +37,16 @@ pnoController = [[PixnetOauth2ViewController alloc] initOauthWithClientId:consum
 
 * [PIXNET Developers](http://apps.pixnet.tw/)
 
+## Notes
+
+* 2013/07/28
+
+ 
+> 增加SDK版本(current 0.1000),   
+> 同時將`PixnetOauth2ViewController`的 grant authorization_code action 調整到 `PixnetOauth2`,  
+> 並定義`PixnetOauth2GrantType`以及`GrantCompletedHandler`, 加上部分NSError的定義 
+>
+
 ## License
 
 Copyright (c) 2013 Green Chiu, http://greenchiu.github.com/ Licensed under the MIT license (http://www.opensource.org/licenses/mit-license.php)
