@@ -33,6 +33,8 @@ typedef void (^GrantCompletedHandler)(BOOL successed, NSError* error);
 
 /**
  * refresh the access_token.
+ * 
+ * ps. will be deprecated after version.
  */
 - (void)refreshAccessTokenWithCompletedHandler:(void(^)(BOOL successed, NSError* error))handler;
 

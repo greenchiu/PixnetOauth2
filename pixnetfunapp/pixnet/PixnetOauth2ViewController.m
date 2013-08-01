@@ -7,6 +7,9 @@
 //
 
 #import "PixnetOauth2ViewController.h"
+
+#import "PNError.h"
+
 #import "JSONKit.h"
 
 @interface PixnetOauth2ViewController ()
@@ -45,7 +48,14 @@
 }
 
 - (void)cancelOauth {
-    self.completedHandler(nil, YES, nil);
+    /**
+     * cancel 需要 invoke handler or add a cancel handler?
+     */
+//    NSError* error = [NSError errorWithDomain:PixnetErrorUserCancelOauth
+//                                         code:PixnetOauthErrorCancel
+//                                     userInfo:nil];
+//    
+//    self.completedHandler(nil, error);
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];
@@ -76,45 +86,15 @@
     [oauth grantAccessTokenWithType:PixnetOauth2GrantTypeAuthorizationCode
                          withObject:@{kAuthroizationCode:code, kRedirectUri:self.redirectUrl}
                             handler:^(BOOL success, NSError* error){
-                                NSLog(@"%@", oauth);
                                 if(success) {
-                                    w_self.completedHandler([oauth copy], YES, error);
+                                    w_self.completedHandler([oauth copy], error);
                                 } else {
-                                    w_self.completedHandler(nil, NO, error);
+                                    w_self.completedHandler(nil, error);
                                 }
                                 [w_self dismissViewControllerAnimated:YES completion:^{}];
                             }];
     
     return;
-    
-    static NSString* grantURLFormat = @"https://emma.pixnet.cc/oauth2/grant?grant_type=authorization_code&code=%@&redirect_uri=%@&client_id=%@&client_secret=%@";
-    
-    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:grantURLFormat,code,self.redirectUrl, self.consumerId, self.consumerSecret]];
-    
-    NSURLRequest* request = [NSURLRequest requestWithURL:url];
-    
-    
-//    typeof(self) __weak w_self = self;
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse* response, NSData* data, NSError* error){
-                               [w_self.indicator stopAnimating];
-                               
-                               if(!error) {
-                                   NSDictionary* dictOfOauth = [data objectFromJSONData];
-                                   PixnetOauth2* oauth = [[PixnetOauth2 alloc] initWithConsumerId:w_self.consumerId
-                                                                                   comsumerSercet:w_self.consumerSecret];
-                               
-                                   [oauth setValue:dictOfOauth[@"access_token"] forKey:@"accessToken"];
-                                   [oauth setValue:dictOfOauth[@"refresh_token"] forKey:@"refreshToken"];
-                                   w_self.completedHandler(oauth, NO, nil);
-                               } else {
-                                   w_self.completedHandler(nil, NO, error);
-                               }
-                               
-                               [w_self dismissViewControllerAnimated:YES completion:^{}];
-                           }];
-    
 }
 
 #pragma mark - UIWebView

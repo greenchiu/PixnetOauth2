@@ -10,7 +10,7 @@
 #import "PixnetSDK.h"
 
 
-typedef void (^PixnetOauth2CompletedHandler)(PixnetOauth2* oauth, BOOL isCancel, NSError *error);
+typedef void (^PixnetOauth2CompletedHandler)(PixnetOauth2* oauth, NSError *error);
 
 /**
  * Pixnet Oauth2 的ViewController

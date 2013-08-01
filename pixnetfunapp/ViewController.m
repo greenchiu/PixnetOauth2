@@ -19,6 +19,7 @@
 
 #import "MBProgressHUD.h"
 
+#import "PNRequest.h"
 
 @interface ViewController ()
 @property (nonatomic, strong) PixnetOauth2 *pixnetOauth; // 取得的 pixnet Oauth
@@ -113,15 +114,15 @@
     
     [self.loginButton setEnabled:NO];
     typeof(self) __weak w_self = self;
-    PixnetOauth2CompletedHandler handler = ^(PixnetOauth2* oauth, BOOL isCancel, NSError* error) {
+    PixnetOauth2CompletedHandler handler = ^(PixnetOauth2* oauth, NSError* error) {
         if(oauth) {
             [w_self.loginButton setTitle:@"oauth refresh" forState:UIControlStateNormal];
             [w_self.loginButton setEnabled:YES];
-            
+            NSLog(@"%@", oauth);
             w_self.pixnetOauth = oauth;
             [w_self requestUserData];
         }
-        if(isCancel || error) {
+        if(error) {
             [w_self.loginButton setEnabled:YES];
         }
     };
@@ -148,12 +149,27 @@
 }
 
 - (void)requestUserData {
+    
+    typeof(self) __weak w_self = self;
+    [PNRequest requestOauthUserWithOauth:self.pixnetOauth
+                        completedHandler:^(NSDictionary* data, NSError *error) {
+                            if(!error) {
+                                NSLog(@"%@", data);
+//                                NSDictionary* dictOfResponseData = [data objectFromJSONData];
+                                w_self.pixnetAccount = data[@"account"][@"identity"];
+                                w_self.accountLabel.text = w_self.pixnetAccount;
+                            } else {
+                                NSLog(@"account:%@", error);
+                            }
+                        }];
+    
+    
+    return;
     static  NSString* requestAccountURLFormat = @"https://emma.pixnet.cc/account?format=json&access_token=%@";
     NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:requestAccountURLFormat, self.pixnetOauth.accessToken]];
     NSURLRequest* request = [NSURLRequest requestWithURL:url];
     url = nil;
     
-    typeof(self) __weak w_self = self;
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse* response, NSData* data, NSError* error){
